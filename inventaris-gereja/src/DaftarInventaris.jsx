@@ -6,7 +6,7 @@ function DaftarInventaris() {
     const [kataKunci, setKataKunci] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost/sistem-inventaris/backend/get_all_items.php')
+        fetch('http://localhost/sistem-inventaris/api/get_all_items.php')
             .then(response => response.json())
             .then(data => {
                 if (!data.error) {

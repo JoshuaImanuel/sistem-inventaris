@@ -20,7 +20,7 @@ function FormulirInventaris() {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        fetch('http://localhost/sistem-inventaris/backend/insert_item.php', {
+        fetch('http://localhost/sistem-inventaris/api/insert_item.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
