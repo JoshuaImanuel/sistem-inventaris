@@ -7,6 +7,7 @@ function DetailBarang() {
     const [barang, setBarang] = useState(null);
     const [modeEdit, setModeEdit] = useState(false);
     const [kondisiBaru, setKondisiBaru] = useState('');
+    const [lokasiBaru, setLokasiBaru] = useState('');
 
     useEffect(() => {
         fetch(`http://localhost/api/get_item.php?id=${id}`)
@@ -15,6 +16,7 @@ function DetailBarang() {
                 if (!data.error) {
                     setBarang(data);
                     setKondisiBaru(data.kondisi);
+                    setLokasiBaru(data.lokasi || 'SG 1');
                 } else {
                     alert('Barang tidak ditemukan!');
                     navigate('/daftar');
@@ -27,14 +29,14 @@ function DetailBarang() {
         fetch('http://localhost/api/update_item.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: barang.id, kondisi: kondisiBaru })
+            body: JSON.stringify({ id: barang.id, lokasi: lokasiBaru, kondisi: kondisiBaru })
         })
         .then(response => response.json())
         .then(data => {
             if (data.status === 'sukses') {
-                setBarang({ ...barang, kondisi: kondisiBaru });
+                setBarang({ ...barang, lokasi: lokasiBaru, kondisi: kondisiBaru });
                 setModeEdit(false);
-                alert('Kondisi alat berhasil diperbarui!');
+                alert('Data inventaris berhasil diperbarui!');
             } else {
                 alert('Gagal: ' + data.pesan);
             }
@@ -74,6 +76,23 @@ function DetailBarang() {
                 <p><strong>ID Alat:</strong> {barang.id}</p>
                 <p><strong>Nama Alat:</strong> {barang.nama_alat}</p>
                 <p><strong>Merek:</strong> {barang.merek}</p>
+
+                <div style={{ marginTop: '15px' }}>
+                    <strong>Lokasi Saat Ini:</strong>{' '}
+                    {!modeEdit ? (
+                        <span style={{ fontWeight: 'bold' }}>{barang.lokasi}</span>
+                    ) : (
+                        <select 
+                            value={lokasiBaru} 
+                            onChange={(e) => setLokasiBaru(e.target.value)}
+                            style={{ padding: '8px', marginLeft: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                        >
+                            <option value="SG 1">SG 1</option>
+                            <option value="SG 2">SG 2</option>
+                            <option value="Gudang">Gudang</option>
+                        </select>
+                    )}
+                </div>
                 
                 <div style={{ marginTop: '15px', marginBottom: '20px' }}>
                     <strong>Kondisi Saat Ini:</strong>{' '}
@@ -95,7 +114,7 @@ function DetailBarang() {
                 <div style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', gap: '10px' }}>
                     {!modeEdit ? (
                         <>
-                            <button onClick={() => setModeEdit(true)} style={{ padding: '10px 20px', backgroundColor: '#ffc107', color: '#333', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Edit Kondisi</button>
+                            <button onClick={() => setModeEdit(true)} style={{ padding: '10px 20px', backgroundColor: '#ffc107', color: '#333', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Edit Data</button>
                             <button onClick={hapusBarang} style={{ padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Hapus Barang</button>
                         </>
                     ) : (

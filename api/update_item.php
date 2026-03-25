@@ -21,18 +21,19 @@ try {
 
     $data = json_decode(file_get_contents("php://input"));
 
-    if (!$data || !isset($data->id) || !isset($data->kondisi)) {
+    if (!$data || !isset($data->id) || !isset($data->kondisi) || !isset($data->lokasi)) {
         throw new Exception("Data tidak lengkap untuk pembaruan");
     }
 
     $id = $data->id;
+    $lokasi = $data->lokasi;
     $kondisi = $data->kondisi;
 
-    $query = $conn->prepare("UPDATE alat_multimedia SET kondisi = ? WHERE id = ?");
-    $query->bind_param("ss", $kondisi, $id);
+    $query = $conn->prepare("UPDATE alat_multimedia SET lokasi = ?, kondisi = ? WHERE id = ?");
+    $query->bind_param("sss", $lokasi, $kondisi, $id);
 
     if($query->execute()) {
-        echo json_encode(["status" => "sukses", "pesan" => "Kondisi berhasil diperbarui"]);
+        echo json_encode(["status" => "sukses", "pesan" => "Data berhasil diperbarui"]);
     } else {
         throw new Exception("Gagal mengeksekusi pembaruan data");
     }

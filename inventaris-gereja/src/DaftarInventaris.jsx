@@ -23,17 +23,18 @@ function DaftarInventaris() {
         return (
             barang.id.toLowerCase().includes(kataKunciKecil) ||
             barang.nama_alat.toLowerCase().includes(kataKunciKecil) ||
-            barang.merek.toLowerCase().includes(kataKunciKecil)
+            barang.merek.toLowerCase().includes(kataKunciKecil) ||
+            (barang.lokasi && barang.lokasi.toLowerCase().includes(kataKunciKecil))
         );
     });
 
     return (
-        <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
+        <div style={{ padding: '20px', maxWidth: '900px', margin: '0 auto' }}>
             <h2>Daftar Inventaris IT/MS</h2>
             <div style={{ marginBottom: '20px' }}>
                 <input
                     type="text"
-                    placeholder="Cari ID, Nama Alat, atau Merek..."
+                    placeholder="Cari ID, Nama Alat, Merek, atau Lokasi..."
                     value={kataKunci}
                     onChange={(e) => setKataKunci(e.target.value)}
                     style={{ padding: '10px', width: '100%', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px' }}
@@ -45,6 +46,7 @@ function DaftarInventaris() {
                         <th style={{ padding: '10px', border: '1px solid #ddd' }}>ID Alat</th>
                         <th style={{ padding: '10px', border: '1px solid #ddd' }}>Nama Alat</th>
                         <th style={{ padding: '10px', border: '1px solid #ddd' }}>Merek</th>
+                        <th style={{ padding: '10px', border: '1px solid #ddd' }}>Lokasi</th>
                         <th style={{ padding: '10px', border: '1px solid #ddd' }}>Kondisi</th>
                         <th style={{ padding: '10px', border: '1px solid #ddd' }}>Aksi</th>
                     </tr>
@@ -55,6 +57,7 @@ function DaftarInventaris() {
                             <td style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>{barang.id}</td>
                             <td style={{ padding: '10px', border: '1px solid #ddd' }}>{barang.nama_alat}</td>
                             <td style={{ padding: '10px', border: '1px solid #ddd' }}>{barang.merek}</td>
+                            <td style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>{barang.lokasi}</td>
                             <td style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center', color: barang.kondisi === 'Baik' ? 'green' : 'red' }}>
                                 {barang.kondisi}
                             </td>
