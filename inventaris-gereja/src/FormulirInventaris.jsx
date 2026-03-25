@@ -20,7 +20,7 @@ function FormulirInventaris() {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        fetch('http://localhost/api/insert_item.php', {
+        fetch('http://localhost/sistem-inventaris/backend/insert_item.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,8 +62,8 @@ function FormulirInventaris() {
     };
 
     return (
-        <div className="wadah-formulir">
-            <h2>Tambah Inventaris Baru</h2>
+        <div className="wadah-formulir" style={{ padding: '20px', maxWidth: '500px', margin: '40px auto', border: '1px solid #e0e0e0', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0,0,0,0.05)', fontFamily: 'Arial, sans-serif' }}>
+            <h2 style={{ color: '#0056b3', textAlign: 'center', marginBottom: '20px' }}>Tambah Inventaris Baru</h2>
             <form onSubmit={handleSubmit}>
                 <div style={{ marginBottom: '15px' }}>
                     <input type="text" name="id" placeholder="ID Alat (contoh: KMR-001)" value={formData.id} onChange={handleChange} required style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }} />

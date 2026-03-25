@@ -10,7 +10,7 @@ function DetailBarang() {
     const [lokasiBaru, setLokasiBaru] = useState('');
 
     useEffect(() => {
-        fetch(`http://localhost/api/get_item.php?id=${id}`)
+        fetch(`http://localhost/sistem-inventaris/backend/get_item.php?id=${id}`)
             .then(response => response.json())
             .then(data => {
                 if (!data.error) {
@@ -26,7 +26,7 @@ function DetailBarang() {
     }, [id, navigate]);
 
     const simpanPembaruan = () => {
-        fetch('http://localhost/api/update_item.php', {
+        fetch('http://localhost/sistem-inventaris/backend/update_item.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: barang.id, lokasi: lokasiBaru, kondisi: kondisiBaru })
@@ -47,7 +47,7 @@ function DetailBarang() {
     const hapusBarang = () => {
         const konfirmasi = window.confirm(`Apakah Anda yakin ingin menghapus ${barang.nama_alat} secara permanen?`);
         if (konfirmasi) {
-            fetch('http://localhost/api/delete_item.php', {
+            fetch('http://localhost/sistem-inventaris/backend/delete_item.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: barang.id })
@@ -66,7 +66,7 @@ function DetailBarang() {
     };
 
     if (!barang) {
-        return <div style={{ textAlign: 'center', marginTop: '50px' }}>Memuat informasi inventaris...</div>;
+        return <div style={{ textAlign: 'center', marginTop: '50px', fontFamily: 'Arial, sans-serif' }}>Memuat informasi inventaris...</div>;
     }
 
     return (
